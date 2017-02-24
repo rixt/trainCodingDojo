@@ -1,2 +1,6 @@
-# trainCodingDojo
-Coding dojo with Lego trains
+# Coding Dojo with Lego train
+TODO: About
+# Hardware
+TODO
+# Software
+
