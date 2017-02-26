@@ -39,7 +39,7 @@ def drive_right(seconds_running_motor):
 
     GPIO.output(STEPPIN_RIGHT, GPIO.HIGH)
     MOTOR_PWM.start(MOTORPOWER)
-    print "righting running  motor "
+    print "Running  motor right"
     time.sleep(seconds_running_motor)
     GPIO.output(STEPPIN_RIGHT, GPIO.LOW)
     MOTOR_PWM.stop()
@@ -49,7 +49,7 @@ def drive_left(seconds_running_motor):
 
     GPIO.output(STEPPIN_LEFT, GPIO.HIGH)
     MOTOR_PWM.start(MOTORPOWER)
-    print "backwarding running motor"
+    print "Running motor left"
     time.sleep(seconds_running_motor)
     GPIO.output(STEPPIN_LEFT, GPIO.LOW)
     MOTOR_PWM.stop()

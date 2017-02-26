@@ -4,6 +4,8 @@ This module is a combination of detect and motor module
 
 # External librarys
 from time import sleep     # Import time library
+import signal
+import sys
 
 # Library for controlling GPIO pins
 import RPi.GPIO as GPIO  # https://sourceforge.net/p/raspberry-gpio-python/wiki/Home/
@@ -33,9 +35,18 @@ GPIO.output(STEPPIN_LEFT, GPIO.LOW)
 SENSOR1 = 20
 SENSOR2 = 21
 
-# Set sensor 1 and 2 as input and Activate pull up resistor
-GPIO.setup(SENSOR1, GPIO.IN, pull_upp_down=GPIO.PUD_UP)
-GPIO.setup(SENSOR2, GPIO.IN, pull_upp_down=GPIO.PUD_UP)
+# Set sensor 1 and 2 as input and Activate pull down resistor
+GPIO.setup(SENSOR1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(SENSOR2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+# Signal handler for cleaning up resources
+def signal_handler(signal, frame):
+    """ Signal handler for cleaning up resources """
+    print 'You pressed Ctrl+C!'
+    GPIO.cleanup()
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 # Function for driving motor
 def drive_right(seconds_running_motor):
@@ -43,7 +54,7 @@ def drive_right(seconds_running_motor):
 
     GPIO.output(STEPPIN_RIGHT, GPIO.HIGH)
     MOTOR_PWM.start(MOTORPOWER)
-    print "righting running  motor "
+    print "Running motor right"
     sleep(seconds_running_motor)
     GPIO.output(STEPPIN_RIGHT, GPIO.LOW)
     MOTOR_PWM.stop()
@@ -54,7 +65,7 @@ def drive_left(seconds_running_motor):
 
     GPIO.output(STEPPIN_LEFT, GPIO.HIGH)
     MOTOR_PWM.start(MOTORPOWER)
-    print "backwarding running motor"
+    print "Running motor left"
     sleep(seconds_running_motor)
     GPIO.output(STEPPIN_LEFT, GPIO.LOW)
     MOTOR_PWM.stop()
@@ -69,11 +80,11 @@ drive_left(0.5)
 
 while 1:  # Create an infinite loop
 
-    if GPIO.input(SENSOR1) == 0:  # sensor 1 will report 0 if it is passed
-        print "Sensor 1 Passing"
+    if GPIO.input(SENSOR1) == 1:  # sensor 1 will report 1 if it is passed
+        print "Passing sensor 1"
         sleep(1)   # delay
-    if GPIO.input(SENSOR2) == 0:  # sensor 2 will report 0 if it is passed
-        print "Sensor 2 Passing"
+    if GPIO.input(SENSOR2) == 1:  # sensor 2 will report 1 if it is passed
+        print "Passing sensor 2"
         if GEARSTATE == 0:
             drive_right(0.6)
             GEARSTATE = 1
