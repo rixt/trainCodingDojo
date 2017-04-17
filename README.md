@@ -25,24 +25,27 @@ Operating system used on the PI.
 
 ### LIRC
 LIRC is need to controll the train with IR. Follow the instructions from Internet of Lego
-http://www.internetoflego.com/lego-train-automation-ir-power-functions-with-nodejs-and-lirc/
+<http://www.internetoflego.com/lego-train-automation-ir-power-functions-with-nodejs-and-lirc/>
 
 LIRC is a package that allows you to decode and send infra-red signals of many (but not all) commonly used remote controls.
 
 ### Lego-LIRC
 LEGO Power Functions LIRC (Linux Infrared Remote Control)
-
 https://github.com/dspinellis/lego-lirc
 
 ## Controll train
 The IR-remote is controlled with LIRC.
 
 ### List all possible commands
+```
 irsend LIST LEGO_Single_Output ""
+```
 
 ### Drive the train forward and stop
+```
 irsend SEND_ONCE LEGO_Single_Output 1B_4
 irsend SEND_ONCE LEGO_Single_Output 1B_BRAKE
+```
 
 ## Reference
 #### Description of the RaspberryPi pinout
@@ -53,5 +56,7 @@ http://www.toptechboy.com/raspberry-pi-with-linux-lessons/
 
 #### Controll LIRC from NodeJS
 https://github.com/alexbain/lirc_node
+
 https://github.com/alexbain/lirc_web
+
 https://github.com/pmgration/node-infrared
